@@ -36,7 +36,7 @@ const Login = () => {
         </h2>
         <p className="text-sm text-center text-gray-400">
           Dont have account?
-          <Link to={"/register"} className="focus:underline hover:underline">
+          <Link to={"/registration"} className="focus:underline hover:underline">
             Sign up here
           </Link>
         </p>

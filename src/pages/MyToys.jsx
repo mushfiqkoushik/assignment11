@@ -1,76 +1,149 @@
-export default function MyToys() {
-  return (
-    <div className="items-center text-base content-center mx-auto">
-      <div className="flex flex-col  p-6 space-y-4 sm:p-10 bg-gray-900 text-gray-100">
-        <h2 className="text-xl font-semibold">My Toys</h2>
-        <ul className="flex flex-col divide-y divide-gray-700">
-          <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
-            <div className="flex w-full space-x-2 sm:space-x-4">
-              <img
-                className="flex-shrink-0 object-cover w-18 h-18 px-1 py-2 items-center mr-2 border-transparent rounded outline-none sm:w-32 sm:h-32 bg-gray-500"
-                src="https://i.ibb.co/QvNfzmM/car11.jpg"
-                alt="Polaroid camera"
-              />
-              <div className="flex flex-col justify-between w-full pb-4">
-                <div className="flex justify-between w-full pb-2 space-x-2">
-                  <div className="space-y-1 text-justify">
-                    <h3 className="text-lg font-semibold leading-snug sm:pr-8">
-                      Name : koushik
-                    </h3>
-                    <p className="text-base">Price : 99$</p>
-                    <p className="text-lg font-semibold">
-                      available quantity : 50 Pcs
-                    </p>
-                    <p className="text-base text-white">
-                      Detail description: Lorem ipsum dolor sit amet.
-                    </p>
-                  </div>
-                  <div className="text-right flex gap-5">
-                    <button
-                      type="button"
-                      className="flex items-center px-2 py-1 pl-0 space-x-1"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                        className="w-4 h-4 fill-current"
-                      >
-                        <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
-                        <rect width="32" height="200" x="168" y="216"></rect>
-                        <rect width="32" height="200" x="240" y="216"></rect>
-                        <rect width="32" height="200" x="312" y="216"></rect>
-                        <path d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z"></path>
-                      </svg>
-                      <span>Delete</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="flex items-center px-2 py-1 space-x-1"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                        />
-                      </svg>
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+// Image 1: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 2: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 3: https://i.ibb.co/WWDhKtz/car18.jpg
+// Image 4: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 5: https://i.ibb.co/xSMqzKj/car14.jpg
+// Image 6: https://i.ibb.co/QnF7TPx/car13.jpg
+// Image 7: https://i.ibb.co/DRLX08N/car12.jpg
+// Image 8: https://i.ibb.co/YRgsNSD/car-4.jpg
+export default function MyToy() {
+  const [toys, setToys] = useState([]);
+  const [isChange, setIsChange] = useState(false);
 
-                      <span>Update</span>
-                    </button>
-                  </div>
-                </div>
-                <div className="flex text-sm divide-x"></div>
-              </div>
-            </div>
-          </li>
-        </ul>
+  useEffect(() => {
+    async function getToys() {
+      const res = await axios.get("http://localhost:5000/toys");
+      console.log(res);
+      setToys(res?.data);
+    }
+    getToys();
+  }, [isChange]);
+
+  const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  //   const [toys, setToys] = useState([
+  //     {
+  //       id: 1,
+  //       seller: "John Doe",
+  //       name: "Awesome Toy 1",
+  //       subCategory: "Educational Toys",
+  //       price: 29.99,
+  //       quantity: 10,
+  //     },
+  //     {
+  //       id: 2,
+  //       seller: "Jane Smith",
+  //       name: "Awesome Toy 2",
+  //       subCategory: "Building Blocks",
+  //       price: 19.99,
+  //       quantity: 5,
+  //     },
+  //     {
+  //       id: 3,
+  //       seller: "Ane Smith",
+  //       name: "Awesome Toy 2",
+  //       subCategory: "Building Blocks",
+  //       price: 19.99,
+  //       quantity: 5,
+  //     },
+  //     // Add more toy objects as needed
+  //   ]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleViewDetails = (toyId) => {
+    // Check if the user is logged in
+    const isLoggedIn = true; // Replace with your authentication logic
+
+    if (isLoggedIn) {
+      // If logged in, navigate to the toy details page
+      navigate(`/toy/${toyId}`);
+    } else {
+      // If not logged in, redirect to the login page
+      navigate("/login");
+    }
+  };
+
+  const filteredToys = toys.filter((toy) =>
+    toy.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  console.log(filteredToys);
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    const { isConfirmed } = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (isConfirmed) {
+      const res = await axios.delete(`http://localhost:5000/toys/${id}`);
+
+      console.log(res);
+      if (res?.data?.deletedCount == 1) setIsChange(!isChange);
+      Swal.fire("Deleted!", "Toy has been deleted.", "success");
+    }
+  };
+  return (
+    <div className="container mx-auto mt-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search by Toy Name"
+            value={searchTerm}
+            onChange={handleSearch}
+            className="border border-gray-300 rounded-md px-4 py-2 w-64"
+          />
+        </div>
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 border-b">Seller</th>
+              <th className="px-4 py-2 border-b">Toy Name</th>
+              <th className="px-4 py-2 border-b">Sub-category</th>
+              <th className="px-4 py-2 border-b">Price</th>
+              <th className="px-4 py-2 border-b">Available Quantity</th>
+              <th className="px-4 py-2 border-b"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredToys.map((toy) => (
+              <tr key={toy.id}>
+                <td className="px-4 py-2 border-b">{toy.sellerName}</td>
+                <td className="px-4 py-2 border-b">{toy.name}</td>
+                <td className="px-4 py-2 border-b">{toy.subCategory}</td>
+                <td className="px-4 py-2 border-b">{toy.price}</td>
+                <td className="px-4 py-2 border-b">{toy.quantity}</td>
+                <td className="px-4 py-2 border-b">
+                  <button
+                    onClick={() => handleViewDetails(toy?._id)}
+                    className="px-4 py-2 rounded-md bg-violet-500 text-white font-semibold hover:bg-violet-600"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(toy?._id)}
+                    className="px-4 py-2 rounded-md bg-red-500 text-white font-semibold hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

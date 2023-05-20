@@ -10,12 +10,12 @@ import { useNavigate } from "react-router-dom";
 // Image 7: https://i.ibb.co/DRLX08N/car12.jpg
 // Image 8: https://i.ibb.co/YRgsNSD/car-4.jpg
 export default function Alltoy() {
-  const [toy, setToy] = useState([]);
+  const [toys, setToys] = useState([]);
   useEffect(() => {
     async function getToys() {
       const res = await axios.get("http://localhost:5000/toys");
       console.log(res);
-      setToy(res?.data);
+      setToys(res?.data);
     }
     getToys();
   }, []);
@@ -23,33 +23,33 @@ export default function Alltoy() {
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [toys, setToys] = useState([
-    {
-      id: 1,
-      seller: "John Doe",
-      name: "Awesome Toy 1",
-      subCategory: "Educational Toys",
-      price: 29.99,
-      quantity: 10,
-    },
-    {
-      id: 2,
-      seller: "Jane Smith",
-      name: "Awesome Toy 2",
-      subCategory: "Building Blocks",
-      price: 19.99,
-      quantity: 5,
-    },
-    {
-      id: 3,
-      seller: "Ane Smith",
-      name: "Awesome Toy 2",
-      subCategory: "Building Blocks",
-      price: 19.99,
-      quantity: 5,
-    },
-    // Add more toy objects as needed
-  ]);
+  //   const [toys, setToys] = useState([
+  //     {
+  //       id: 1,
+  //       seller: "John Doe",
+  //       name: "Awesome Toy 1",
+  //       subCategory: "Educational Toys",
+  //       price: 29.99,
+  //       quantity: 10,
+  //     },
+  //     {
+  //       id: 2,
+  //       seller: "Jane Smith",
+  //       name: "Awesome Toy 2",
+  //       subCategory: "Building Blocks",
+  //       price: 19.99,
+  //       quantity: 5,
+  //     },
+  //     {
+  //       id: 3,
+  //       seller: "Ane Smith",
+  //       name: "Awesome Toy 2",
+  //       subCategory: "Building Blocks",
+  //       price: 19.99,
+  //       quantity: 5,
+  //     },
+  //     // Add more toy objects as needed
+  //   ]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -98,7 +98,7 @@ export default function Alltoy() {
           <tbody>
             {filteredToys.map((toy) => (
               <tr key={toy.id}>
-                <td className="px-4 py-2 border-b">{toy.seller}</td>
+                <td className="px-4 py-2 border-b">{toy.sellerName}</td>
                 <td className="px-4 py-2 border-b">{toy.name}</td>
                 <td className="px-4 py-2 border-b">{toy.subCategory}</td>
                 <td className="px-4 py-2 border-b">{toy.price}</td>
