@@ -1,6 +1,5 @@
-import React from "react";
 
-export default function () {
+export default function Blogs() {
   return (
     <div>
       <div>
@@ -99,15 +98,16 @@ export default function () {
             applied to the data. <br />
             Pipeline Stages: The aggregate function operates on a collection and
             processes the documents through a series of pipeline stages. Each
-            stage defines a specific operation to <br /> be performed on the data. The
-            stages are executed sequentially, and the output of each stage
-            becomes the input for the next stage. Common Aggregate Stages: <br />
+            stage defines a specific operation to <br /> be performed on the
+            data. The stages are executed sequentially, and the output of each
+            stage becomes the input for the next stage. Common Aggregate Stages:{" "}
+            <br />
             MongoDB provides a set of common stages that can be used in the
             aggregate pipeline. Some of the commonly used stages include:
-            $match: Filters the documents based on specified conditions. <br /> $group:
-            Groups the documents by a specified key and performs aggregation
-            operations (such as counting, summing, averaging) on grouped data.
-           
+            $match: Filters the documents based on specified conditions. <br />{" "}
+            $group: Groups the documents by a specified key and performs
+            aggregation operations (such as counting, summing, averaging) on
+            grouped data.
           </p>
         </div>
       </div>

@@ -1,157 +1,121 @@
-import React from 'react'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+// Image 1: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 2: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 3: https://i.ibb.co/WWDhKtz/car18.jpg
+// Image 4: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 5: https://i.ibb.co/xSMqzKj/car14.jpg
+// Image 6: https://i.ibb.co/QnF7TPx/car13.jpg
+// Image 7: https://i.ibb.co/DRLX08N/car12.jpg
+// Image 8: https://i.ibb.co/YRgsNSD/car-4.jpg
+export default function Alltoy() {
+  const [toy, setToy] = useState([]);
+  useEffect(() => {
+    async function getToys() {
+      const res = await axios.get("http://localhost:5000/toys");
+      console.log(res);
+      setToy(res?.data);
+    }
+    getToys();
+  }, []);
 
-export default function 
-() {
+  const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [toys, setToys] = useState([
+    {
+      id: 1,
+      seller: "John Doe",
+      name: "Awesome Toy 1",
+      subCategory: "Educational Toys",
+      price: 29.99,
+      quantity: 10,
+    },
+    {
+      id: 2,
+      seller: "Jane Smith",
+      name: "Awesome Toy 2",
+      subCategory: "Building Blocks",
+      price: 19.99,
+      quantity: 5,
+    },
+    {
+      id: 3,
+      seller: "Ane Smith",
+      name: "Awesome Toy 2",
+      subCategory: "Building Blocks",
+      price: 19.99,
+      quantity: 5,
+    },
+    // Add more toy objects as needed
+  ]);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleViewDetails = (toyId) => {
+    // Check if the user is logged in
+    const isLoggedIn = true; // Replace with your authentication logic
+
+    if (isLoggedIn) {
+      // If logged in, navigate to the toy details page
+      navigate(`/toy/${toyId}`);
+    } else {
+      // If not logged in, redirect to the login page
+      navigate("/login");
+    }
+  };
+
+  const filteredToys = toys.filter((toy) =>
+    toy.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  console.log(filteredToys);
   return (
-    <div className='mx-auto px-5 text-base mt-10 grid grid-cols-3  items-center'>
-<div className=' mt-5 mb-5'>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/YRgsNSD/car-4.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
+    <div className="container mx-auto mt-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search by Toy Name"
+            value={searchTerm}
+            onChange={handleSearch}
+            className="border border-gray-300 rounded-md px-4 py-2 w-64"
+          />
+        </div>
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 border-b">Seller</th>
+              <th className="px-4 py-2 border-b">Toy Name</th>
+              <th className="px-4 py-2 border-b">Sub-category</th>
+              <th className="px-4 py-2 border-b">Price</th>
+              <th className="px-4 py-2 border-b">Available Quantity</th>
+              <th className="px-4 py-2 border-b"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredToys.map((toy) => (
+              <tr key={toy.id}>
+                <td className="px-4 py-2 border-b">{toy.seller}</td>
+                <td className="px-4 py-2 border-b">{toy.name}</td>
+                <td className="px-4 py-2 border-b">{toy.subCategory}</td>
+                <td className="px-4 py-2 border-b">{toy.price}</td>
+                <td className="px-4 py-2 border-b">{toy.quantity}</td>
+                <td className="px-4 py-2 border-b">
+                  <button
+                    onClick={() => handleViewDetails(toy.id)}
+                    className="px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600"
+                  >
+                    View Details
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-<div className=''>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/YRgsNSD/car-4.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-<div className='mt-5 mb-5'>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/WWDhKtz/car18.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-<div className='mt-5 mb-5'>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/YRgsNSD/car-4.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-<div className=''>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/YRgsNSD/car-4.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-<div className=''>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/xSMqzKj/car14.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-<div className=''>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/QnF7TPx/car13.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-<div className=''>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/DRLX08N/car12.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-<div className=''>
-       <div className="max-w-xs rounded-md shadow-md bg-gray-900 text-gray-100">
-	<img src="https://i.ibb.co/YRgsNSD/car-4.jpg" alt="" className="object-cover object-center w-full rounded-t-md  px-2 py-2 rounded-full bg-gray-500" />
-	<div className="flex flex-col justify-between p-6 space-y-8">
-		<div className="space-y-2">
-			<h2 className="text-3xl font-semibold tracking-wide"> Seller: Donec lectus leo</h2>
-			<p className="dark:text-gray-100">Toy Name: koushik</p>
-			<p className="dark:text-gray-100">Sub-category:baby toy</p>
-			<p className="dark:text-gray-100">Price: $100</p>
-			<p className="dark:text-gray-100">Available Quantity: 50 pcs</p>
-			
-		</div>
-		<button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md bg-violet-400 text-gray-900">view Details</button>
-	</div>
-</div>
-    </div>
-
-
-
-
-    </div>
-  )
+  );
 }

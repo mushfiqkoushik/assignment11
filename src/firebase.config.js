@@ -10,8 +10,9 @@ const firebaseConfig = {
   projectId: "toy-store-a5a8e",
   storageBucket: "toy-store-a5a8e.appspot.com",
   messagingSenderId: "967242546730",
-  appId: "1:967242546730:web:b9b9fc02d1b7a1298a8d53"
+  appId: "1:967242546730:web:b9b9fc02d1b7a1298a8d53",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export default app;

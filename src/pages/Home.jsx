@@ -1,6 +1,4 @@
-import React from "react";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
+
 import Blogs from "./Blogs";
 import Banner from "../components/Banner";
 import Gallery from "../components/Gallery";
@@ -11,57 +9,49 @@ import ToyDetails from "./ToyDetails";
 import AddAToy from "./AddAToy";
 import MyToys from "./MyToys";
 
-
 function Home() {
   return (
     <div>
       <div>
-        <Nav />
-      </div>
-
-      <div>
         <h1 className="mt-10 text-5xl text-center">
           Banner Section
           <div>
-            <Banner/>
+            <Banner />
           </div>
         </h1>
       </div>
 
-
       <div>
         <h1 className="mt-10 text-5xl text-center mb-10">
-         Gallery Section
+          Gallery Section
           <div>
-            <Gallery/>
+            <Gallery />
           </div>
         </h1>
       </div>
       <div>
         <h1 className="mt-10 text-5xl text-center mb-10">
-         Feedback Section
+          Feedback Section
           <div>
-            <Feedback/>
-          </div>
-        </h1>
-      </div>
-     
-
-      <div>
-        <h1 className="mt-10 text-5xl text-center mb-10">
-         Feature Section
-          <div>
-            <Feature/>
+            <Feedback />
           </div>
         </h1>
       </div>
 
+      <div>
+        <h1 className="mt-10 text-5xl text-center mb-10">
+          Feature Section
+          <div>
+            <Feature />
+          </div>
+        </h1>
+      </div>
 
       <div>
         <h1 className="mt-10 text-5xl text-center mb-10">
-         ALL TOY Section
+          ALL TOY Section
           <div>
-           <Alltoy/>
+            <Alltoy />
           </div>
         </h1>
       </div>
@@ -70,25 +60,24 @@ function Home() {
         <h1 className="mt-10 text-5xl text-center mb-10">
           TOY DETAILS Section
           <div>
-           <ToyDetails/>
+            <ToyDetails />
           </div>
         </h1>
       </div>
 
-
       <div>
         <h1 className="mt-10 text-5xl text-center mb-10">
-          ADD A TOY  Section
+          ADD A TOY Section
           <div>
-           <AddAToy/>
+            <AddAToy />
           </div>
         </h1>
       </div>
       <div>
         <h1 className="mt-10 text-5xl text-center mb-10">
-          My TOY  Section
+          My TOY Section
           <div>
-           < MyToys/>
+            <MyToys />
           </div>
         </h1>
       </div>
@@ -100,10 +89,6 @@ function Home() {
             <Blogs></Blogs>
           </div>
         </h1>
-      </div>
-
-      <div>
-        <Footer />
       </div>
     </div>
   );
