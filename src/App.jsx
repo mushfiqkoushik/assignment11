@@ -10,7 +10,13 @@ import Alltoy from "./pages/Alltoy";
 import ToyDetails from "./pages/ToyDetails";
 import MyToys from "./pages/MyToys";
 import EditToy from "./pages/EditToy";
+import PrivateRoute from "./components/PrivateRoute";
+import AOS from "aos";
+import "react-tabs/style/react-tabs.css";
 
+import "aos/dist/aos.css"; // You can also use <link> for styles
+// ..
+AOS.init();
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,11 +40,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/toy/:id",
-        element: <ToyDetails />,
+        element: (
+          <PrivateRoute>
+            <ToyDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/mytoy",
-        element: <MyToys />,
+        element: (
+          <PrivateRoute>
+            <MyToys />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/edit/:id",

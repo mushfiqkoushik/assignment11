@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 export default function Nav() {
   const { user, logOut } = useContext(AuthContext);
@@ -89,11 +90,26 @@ export default function Nav() {
           </ul>
         </div>
         <div className="items-center flex-shrink-0 hidden lg:flex">
-          <img
-            alt=""
-            className="w-10 mr-5 h-10 rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
-            src="https://source.unsplash.com/40x40/?portrait?1"
-          />
+          {user?.email && (
+            <div
+              className=" tooltip tooltip-left"
+              data-tooltip-id="toolTip1"
+              data-place="top"
+              data-tooltip-content={user?.displayName ? user?.displayName : user?.email}
+            >
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full mr-4 ">
+                  <img
+                    alt=""
+                    className="w-10 mr-5 h-10 rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
+                    src="https://source.unsplash.com/40x40/?portrait?1"
+                  />
+                </div>
+
+                <Tooltip id="toolTip1" />
+              </label>
+            </div>
+          )}
           {!user?.email && (
             <Link to={"/login"}>
               <button className="px-8 py-3 font-semibold rounded bg-violet-400 text-gray-900 gap-2">

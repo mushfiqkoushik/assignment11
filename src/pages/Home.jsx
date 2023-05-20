@@ -1,20 +1,22 @@
-
 import Banner from "../components/Banner";
 import Gallery from "../components/Gallery";
 import Feedback from "../components/Feedback";
 import Feature from "../components/Feature";
-
+import ShopByCategory from "../components/ShopCategories";
 
 function Home() {
   return (
     <div>
       <div>
-        <h1 className="mt-10 text-5xl text-center">
-          Banner Section
-          <div>
-            <Banner />
-          </div>
-        </h1>
+        <h1 className="mt-10 text-5xl text-center mb-5">Banner Section</h1>
+        <div
+          data-aos="fade-in"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
+        >
+          <Banner />
+        </div>
       </div>
 
       <div>
@@ -22,6 +24,14 @@ function Home() {
           Gallery Section
           <div>
             <Gallery />
+          </div>
+        </h1>
+      </div>
+      <div>
+        <h1 className="mt-10 text-5xl text-center mb-10">
+          Shop Category
+          <div>
+            <ShopByCategory />
           </div>
         </h1>
       </div>
@@ -42,7 +52,7 @@ function Home() {
           </div>
         </h1>
       </div>
-{/* 
+      {/* 
       <div>
         <h1 className="mt-10 text-5xl text-center mb-10">
           ALL TOY Section

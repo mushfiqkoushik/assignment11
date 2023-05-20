@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // Image 1: https://i.ibb.co/YRgsNSD/car-4.jpg
 // Image 2: https://i.ibb.co/YRgsNSD/car-4.jpg
 // Image 3: https://i.ibb.co/WWDhKtz/car18.jpg
@@ -13,7 +13,7 @@ export default function Alltoy() {
   const [toys, setToys] = useState([]);
   useEffect(() => {
     async function getToys() {
-      const res = await axios.get("http://localhost:5000/toys");
+      const res = await axios.get("http://localhost:5000/alltoy");
       console.log(res);
       setToys(res?.data);
     }
@@ -55,19 +55,6 @@ export default function Alltoy() {
     setSearchTerm(e.target.value);
   };
 
-  const handleViewDetails = (toyId) => {
-    // Check if the user is logged in
-    const isLoggedIn = true; // Replace with your authentication logic
-
-    if (isLoggedIn) {
-      // If logged in, navigate to the toy details page
-      navigate(`/toy/${toyId}`);
-    } else {
-      // If not logged in, redirect to the login page
-      navigate("/login");
-    }
-  };
-
   const filteredToys = toys.filter((toy) =>
     toy?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
   );
@@ -104,12 +91,11 @@ export default function Alltoy() {
                 <td className="px-4 py-2 border-b">{toy.price}</td>
                 <td className="px-4 py-2 border-b">{toy.quantity}</td>
                 <td className="px-4 py-2 border-b">
-                  <button
-                    onClick={() => handleViewDetails(toy.id)}
-                    className="px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600"
-                  >
-                    View Details
-                  </button>
+                  <Link to={`${toy?._id}`}>
+                    <button className="px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600">
+                      View Details
+                    </button>
+                  </Link>
                 </td>
               </tr>
             ))}
