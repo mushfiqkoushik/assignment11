@@ -91,7 +91,7 @@ export default function Alltoy() {
                 <td className="px-4 py-2 border-b">{toy.price}</td>
                 <td className="px-4 py-2 border-b">{toy.quantity}</td>
                 <td className="px-4 py-2 border-b">
-                  <Link to={`${toy?._id}`}>
+                  <Link to={`/toy/${toy?._id}`}>
                     <button className="px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600">
                       View Details
                     </button>

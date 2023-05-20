@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 const ShopByCategory = () => {
-  const [selectedCategory, setSelectedCategory] = useState(
-    "Educational Toys"
-  );
+  const [selectedCategory, setSelectedCategory] = useState("Educational Toys");
   const [toys, setToys] = useState([]);
   const categories = [
     {
@@ -63,16 +62,18 @@ const ShopByCategory = () => {
 
         {categories.map((category, index) => (
           <TabPanel key={index}>
-            <div className="toys-container grid grid-cols-2 gap-2">
+            <div className="toys-container grid grid-cols-2 gap-2 place-items-center my-4">
               {filteredToys.map((toy, toyIndex) => (
                 <div key={toyIndex} className="toy-item shadow max-w-sm">
                   <img src={toy?.pictureUrl} alt={toy.name} />
                   <p>{toy.name}</p>
                   <p>Price: {toy.price}</p>
                   <p>Rating: {toy.rating}</p>
-                  <button className="bg-violet-700 text-xl text-white px-4 py-2 w-full">
-                    View Details
-                  </button>
+                  <Link to={`/toy/${toy?._id}`}>
+                    <button className="bg-violet-700 text-xl text-white px-4 py-2 w-full">
+                      View Details
+                    </button>
+                  </Link>
                 </div>
               ))}
             </div>
