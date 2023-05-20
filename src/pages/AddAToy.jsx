@@ -1,6 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-
+import Swal from "sweetalert2";
+// Image 1: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 2: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 3: https://i.ibb.co/WWDhKtz/car18.jpg
+// Image 4: https://i.ibb.co/YRgsNSD/car-4.jpg
+// Image 5: https://i.ibb.co/xSMqzKj/car14.jpg
+// Image 6: https://i.ibb.co/QnF7TPx/car13.jpg
+// Image 7: https://i.ibb.co/DRLX08N/car12.jpg
+// Image 8: https://i.ibb.co/YRgsNSD/car-4.jpg
 export default function AddAToy() {
   const [toy, setToy] = useState({});
   const handleOnchage = (e) => {
@@ -8,10 +16,22 @@ export default function AddAToy() {
     const value = e.target.value;
     toy[field] = value;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(toy);
-    axios.get();
+
+    const response = await axios.post("http://localhost:5000/toys", toy);
+    if (response?.data?.insertedId) {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "New toy has been added",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setToy({});
+    }
+    console.log(response);
   };
 
   return (
@@ -31,9 +51,10 @@ export default function AddAToy() {
                 <input
                   onChange={handleOnchage}
                   id="picture"
-                  name="picture"
+                  name="pictureUrl"
                   type="url"
-                  placeholder="Your photo url please"
+                  required
+                  placeholder=" photo url please"
                   className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-25 focus:ring-violet-400 bg-gray-800"
                 />
               </div>
@@ -58,7 +79,7 @@ export default function AddAToy() {
                 </label>
                 <input
                   onChange={handleOnchage}
-                  name="selerName"
+                  name="sellerName"
                   id="selerName"
                   type="text"
                   placeholder="Seller name"
@@ -73,7 +94,7 @@ export default function AddAToy() {
                 </label>
                 <input
                   onChange={handleOnchage}
-                  name="selerEmail"
+                  name="sellerEmail"
                   id="selerEmail"
                   type="email"
                   placeholder="Seller Email"
@@ -88,11 +109,11 @@ export default function AddAToy() {
                     Price
                   </label>
                   <input
+                    name="price"
                     onChange={handleOnchage}
                     id="number"
                     type="number"
                     placeholder="Price"
-                    required=""
                     className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-25 focus:ring-violet-400 bg-gray-800"
                   />
                 </div>
@@ -119,6 +140,7 @@ export default function AddAToy() {
                 </label>
                 <input
                   id="number"
+                  name="quantity"
                   onChange={handleOnchage}
                   type="number"
                   placeholder="Quantity"
@@ -134,6 +156,7 @@ export default function AddAToy() {
                   onChange={handleOnchage}
                   id="text"
                   type="text"
+                  name="description"
                   placeholder="details"
                   required=""
                   className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-25 focus:ring-violet-400 bg-gray-800"
@@ -147,6 +170,7 @@ export default function AddAToy() {
                   onChange={handleOnchage}
                   id="message"
                   type="text"
+                  name="subCategory"
                   placeholder="please select a category"
                   className="block w-full p-2 rounded autoexpand focus:outline-none focus:ring focus:ring-opacity-25 focus:ring-violet-400 bg-gray-800"
                 ></input>

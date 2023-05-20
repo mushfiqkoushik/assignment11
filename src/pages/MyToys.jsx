@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { AuthContext } from "../provider/AuthProvider";
 // Image 1: https://i.ibb.co/YRgsNSD/car-4.jpg
 // Image 2: https://i.ibb.co/YRgsNSD/car-4.jpg
 // Image 3: https://i.ibb.co/WWDhKtz/car18.jpg
@@ -11,21 +12,26 @@ import Swal from "sweetalert2";
 // Image 7: https://i.ibb.co/DRLX08N/car12.jpg
 // Image 8: https://i.ibb.co/YRgsNSD/car-4.jpg
 export default function MyToy() {
+  const { user } = useContext(AuthContext);
   const [toys, setToys] = useState([]);
   const [isChange, setIsChange] = useState(false);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
   useEffect(() => {
     async function getToys() {
-      const res = await axios.get("http://localhost:5000/toys");
+      const res = await axios.get(
+        `http://localhost:5000/toys?sort=${selectedOption}`
+      );
       console.log(res);
       setToys(res?.data);
     }
     getToys();
-  }, [isChange]);
-
+  }, [isChange, selectedOption]);
+  const { email } = user || {};
+  const usersToy = toys?.filter((toy) => toy?.addedBy === email);
   const navigate = useNavigate();
-
-  const [searchTerm, setSearchTerm] = useState("");
+  console.log(usersToy);
   //   const [toys, setToys] = useState([
   //     {
   //       id: 1,
@@ -72,7 +78,7 @@ export default function MyToy() {
   };
 
   const filteredToys = toys.filter((toy) =>
-    toy.name.toLowerCase().includes(searchTerm.toLowerCase())
+    toy.name?.toLowerCase().includes(searchTerm?.toLowerCase())
   );
   console.log(filteredToys);
 
@@ -95,17 +101,20 @@ export default function MyToy() {
       Swal.fire("Deleted!", "Toy has been deleted.", "success");
     }
   };
+
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+  console.log(selectedOption);
   return (
     <div className="container mx-auto mt-8">
       <div className="max-w-5xl mx-auto">
         <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Search by Toy Name"
-            value={searchTerm}
-            onChange={handleSearch}
-            className="border border-gray-300 rounded-md px-4 py-2 w-64"
-          />
+          <select value={selectedOption} onChange={handleOptionChange}>
+            <option value="">Select Sorting Option</option>
+            <option value="1">Ascending</option>
+            <option value="-1">Descending</option>
+          </select>
         </div>
         <table className="min-w-full bg-white border border-gray-300">
           <thead>
@@ -115,11 +124,11 @@ export default function MyToy() {
               <th className="px-4 py-2 border-b">Sub-category</th>
               <th className="px-4 py-2 border-b">Price</th>
               <th className="px-4 py-2 border-b">Available Quantity</th>
-              <th className="px-4 py-2 border-b"></th>
+              <th className="px-4 py-2 border-b">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredToys.map((toy) => (
+            {usersToy.map((toy) => (
               <tr key={toy.id}>
                 <td className="px-4 py-2 border-b">{toy.sellerName}</td>
                 <td className="px-4 py-2 border-b">{toy.name}</td>
@@ -127,12 +136,11 @@ export default function MyToy() {
                 <td className="px-4 py-2 border-b">{toy.price}</td>
                 <td className="px-4 py-2 border-b">{toy.quantity}</td>
                 <td className="px-4 py-2 border-b">
-                  <button
-                    onClick={() => handleViewDetails(toy?._id)}
-                    className="px-4 py-2 rounded-md bg-violet-500 text-white font-semibold hover:bg-violet-600"
-                  >
-                    Edit
-                  </button>
+                  <Link to={`/edit/${toy?._id}`} state={toy}>
+                    <button className="px-4 mr-1 py-2 rounded-md bg-violet-500 text-white font-semibold hover:bg-violet-600">
+                      Edit
+                    </button>
+                  </Link>
                   <button
                     onClick={() => handleDelete(toy?._id)}
                     className="px-4 py-2 rounded-md bg-red-500 text-white font-semibold hover:bg-red-600"

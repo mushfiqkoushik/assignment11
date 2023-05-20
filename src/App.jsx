@@ -9,6 +9,7 @@ import AddAToy from "./pages/AddAToy";
 import Alltoy from "./pages/Alltoy";
 import ToyDetails from "./pages/ToyDetails";
 import MyToys from "./pages/MyToys";
+import EditToy from "./pages/EditToy";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/mytoy",
         element: <MyToys />,
+      },
+      {
+        path: "/edit/:id",
+        element: <EditToy />,
       },
     ],
   },

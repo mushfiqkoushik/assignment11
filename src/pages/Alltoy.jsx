@@ -69,7 +69,7 @@ export default function Alltoy() {
   };
 
   const filteredToys = toys.filter((toy) =>
-    toy.name.toLowerCase().includes(searchTerm.toLowerCase())
+    toy?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
   );
   console.log(filteredToys);
   return (

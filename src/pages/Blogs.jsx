@@ -3,7 +3,7 @@ export default function Blogs() {
   return (
     <div>
       <div>
-        <div className="container mx-auto text-justify">
+        <div className="container mx-auto text-justify px-4">
           <h1 className="text-4xl font-bold mb-10 mt-24  text-center">
             QUESTION & ANSWER
           </h1>
